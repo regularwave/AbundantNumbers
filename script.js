@@ -1,22 +1,25 @@
-// TODO
-// get the second half of the factors
-// sum factors
-// see if sum of factors is > startSeed
-
 var sequenceOutput = document.getElementById('sequence');
-
 function calcsequence() {
     var startSeed = document.getElementById('startseed').value;
-    sequenceOutput.innerHTML = '';
-
-    var uturn = Math.sqrt(startSeed)
-
-    sequenceOutput.innerHTML += "startseed: " + startSeed + "<br>";
-
-    for (let i = 1; i < uturn; i++) {
-        sequenceOutput.innerHTML += "i: " + i + "<br>" ;
+    sequenceOutput.innerHTML = "Abundant numbers up to " + startSeed + ":";
+    for (let j = 1; j <= startSeed; j++) {
+        var uturn = Math.sqrt(j);
+        propFacArr = [];
+        for (let i = 1; i <= uturn; i++) {
+            if (j % i == 0) {
+                propFacArr.push(i);
+                if (i > 1) {
+                    propFacArr.push(j / i);
+                }
+            }
+        }
+        if (uturn % 1 == 0) {
+            propFacArr.pop();
+        }
+        propFacArr.sort((a, b) => a - b);
+        propFacSum = propFacArr.reduce((a, c) => a + c, 0)
+        if (propFacSum > j) {
+            sequenceOutput.innerHTML += "<br>" + j + " (" + propFacSum + " [" + propFacArr + "])"
+        }
     }
-
-    sequenceOutput.innerHTML += "<br>";
-    sequenceOutput.innerHTML += "uturn point: " + uturn;
 }
